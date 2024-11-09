@@ -350,7 +350,7 @@
 								<div class='col-sm-6'>
 									<div class="form-group">
 										<label>Govt. Job</label>
-										<select class="form-control" name='m_gov_job' onchange="govjob(this.value,'M')">
+										<select class="form-control" name='m_gov_job' onchange="mgovjob(this.value,'M')">
 											<option value='Y'>YES</option>
 											<option value='N' selected>NO</option>
 										</select>
@@ -694,12 +694,15 @@
 		if(gen == 'F' && val == 'Y'){
 			$("#job_dropdown").show();
 			
-		}else if(gen == 'M' && val == 'Y'){
-			$("#mjob_dropdown").show();
-		}else if(gen == 'M' && val == 'N'){
-			$("#mjob_dropdwon").hide();
 		}else{
 			$("#job_dropdown").hide();
+		}
+	}
+	function mgovjob(val,gen){
+		if(gen == 'M' && val == 'Y'){
+			$("#mjob_dropdown").show();
+		}else{
+			$("#mjob_dropdown").hide();
 		}
 	}
 
