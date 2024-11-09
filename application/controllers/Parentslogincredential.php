@@ -10,6 +10,7 @@ class Parentslogincredential extends MY_Controller{
 	public function index(){
 		$data['class'] = $this->dbcon->select('classes','*');
 		$data['student'] = $this->dbcon->select('student','*',"Student_Status='ACTIVE'");
+		
 		$this->render_template('student_details/parentlogincredential',$data);
 	}
 	

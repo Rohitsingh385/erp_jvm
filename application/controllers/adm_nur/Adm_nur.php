@@ -234,7 +234,7 @@ class Adm_nur extends MY_Controller
 		$data['school_setting'] = $this->alam->select('school_setting', '*');
 		$data['school_photo'] = $this->alam->select('school_photo', '*');
 
-		$message = "Dear Parent, Your application is successfully submitted. Your username is " . $generate_session['id'] . "/2024 & password is " . $generate_session['mobile'];
+		$message = "Dear Parent, Your application is successfully submitted. Your username is " . $generate_session['id'] . "/2025 & password is " . $generate_session['mobile'];
 		$this->sms_lib->sendSms($generate_session['mobile'], $message);
 		$data['allData'] = $this->alam->selectA('nursery_adm_data', '*', "id='" . $generate_session['id'] . "'");
 		// echo '<pre>';print_r($data);
