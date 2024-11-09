@@ -706,17 +706,21 @@
 		}
 	}
 
-	function toggleTransferableOptions(val,gen){
-		if(gen == 'F' && val == 'others'){
-			$("#f_tranferable").show();	
-		}else if(gen == 'M' && val == 'others'){
-			$("#m_transferable").show();
-		}else if(gen == 'M' && val == 'army' || val =='navy' || val == 'air_forces' || val == 'security_forces' || val == 'housemaker' ){
-		    $("#m_transferable").hide();	
-		}else{
-			$("#f_tranferable").hide();
-		}
-	}
+	function toggleTransferableOptions(val, gen) {
+    if (gen == 'F' && val == 'others') {
+        $("#f_tranferable").show();
+    }
+    else if (gen == 'M' && val == 'others') {
+        $("#m_transferable").show();
+    }
+    else if (gen == 'M' && (val == 'army' || val == 'navy' || val == 'air_forces' || val == 'security_forces')) {
+        $("#m_transferable").hide();
+    }
+    else if (gen == 'F' && (val == 'army' || val == 'navy' || val == 'air_forces' || val == 'security_forces')) {
+        $("#f_tranferable").hide();
+    }
+}
+
 
 	
 
