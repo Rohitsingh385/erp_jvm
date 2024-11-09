@@ -22,6 +22,8 @@ class Adm_nur extends MY_Controller
 		$data['bloodGroup'] = $this->alam_custom->bloodGroup();
 		$data['parent_qualification'] = $this->alam_custom->parent_qualification();
 		$data['parent_accupation'] = $this->alam_custom->parent_accupation();
+		$data['father_accupation'] = $this->alam_custom->father_accupation();
+		$data['mother_accupation'] = $this->alam_custom->mother_accupation();
 		$data['grand_parent'] = $this->alam_custom->grand_parent();
 		$this->load->view('nur_adm/admForm', $data);
 	}

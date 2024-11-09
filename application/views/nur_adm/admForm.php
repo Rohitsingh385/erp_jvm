@@ -239,7 +239,7 @@
 										<select class="form-control" name='f_accupation' required>
 											<option value=''>Select</option>
 											<?php
-												foreach($parent_accupation as $key => $val){
+												foreach($father_accupation as $key => $val){
 											?>
 											<option value='<?php echo $key; ?>'><?php echo $val; ?></option>
 											<?php } ?>
@@ -339,7 +339,7 @@
 										<select class="form-control" name='m_accupation' required>
 											<option value=''>Select</option>
 											<?php
-												foreach($parent_accupation as $key => $val){
+												foreach($mother_accupation as $key => $val){
 											?>
 											<option value='<?php echo $key; ?>'><?php echo $val; ?></option>
 											<?php } ?>

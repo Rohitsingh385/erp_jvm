@@ -55,11 +55,20 @@
 			);
 		}
 
-		public function parent_accupation(){
+		public function father_accupation(){
 			return array(
 				'1' => 'SERVICE',
 				'2' => 'BUSNIESS',
 				'3' => 'OTHERS',
+			);
+		}
+
+		public function mother_accupation(){
+			return array(
+				'1' => 'SERVICE',
+				'2' => 'BUSNIESS',
+				'3' => 'HOUSEMAKER',
+				'4' => 'OTHERS',
 			);
 		}
 		
