@@ -38,7 +38,7 @@
 							<span style='font-size:14px !important'>
 							Shyamali, Doranda Ranchi- 834002
 							</span><br />
-							<b><center><span style='font-size:14px !important;'>NURSERY APPLICATION FORM (for session 2024-2025)</span></center></b>
+							<b><center><span style='font-size:14px !important;'>NURSERY APPLICATION FORM (for session 2025-2026)</span></center></b>
 						</center>
 					</td>
 				</tr>
@@ -57,7 +57,7 @@
 					</tr>
 					<tr style='background:#FADBD8'>
 						<th>Username:</th>
-						<td><?php echo $allData[0]['id']."/2024"; ?></td>
+						<td><?php echo $allData[0]['id']."/2025"; ?></td>
 					</tr>
 					<tr style='background:#FADBD8'>
 						<th>Password:</th>

@@ -71,7 +71,7 @@
 							<span style='font-size:18px !important'>
 							Shyamali, Doranda Ranchi- 834002
 							</span><br />
-							<b><center><span style='font-size:16px !important;'>NURSERY APPLICATION FORM (for session 2025-2026)</span></center></b>
+							<b><center><span style='font-size:16px !important;'>LKG APPLICATION FORM (for session 2025-2026)</span></center></b>
 						</center>
 					</td>
 				</tr>
@@ -103,14 +103,18 @@
 						</select>
 					</div>
 				</div>
-			
 				<div class='col-sm-4'>
 					<div class="form-group">
-						<label>Physically Challenged</label>
-						<select class="form-control" name='phy_challenged' required>
+						<label>Religion <span>*</span></label>
+						<select class="form-control" name='religion' required>
 							<option value=''>Select</option>
-							<option value='Y'>YES</option>
-							<option value='N' selected>NO</option>
+							<?php
+								foreach($religion as $key => $val){
+									?>
+										<option value='<?php echo $val['RNo']; ?>'><?php echo $val['Rname']; ?></option>
+									<?php
+								}
+							?>
 						</select>
 					</div>
 				</div>
@@ -149,21 +153,7 @@
 						</select>
 					</div>
 				</div>
-				<div class='col-sm-4'>
-					<div class="form-group">
-						<label>Religion <span>*</span></label>
-						<select class="form-control" name='religion' required>
-							<option value=''>Select</option>
-							<?php
-								foreach($religion as $key => $val){
-									?>
-										<option value='<?php echo $val['RNo']; ?>'><?php echo $val['Rname']; ?></option>
-									<?php
-								}
-							?>
-						</select>
-					</div>
-				</div>
+			
 			
 				<div class='col-sm-4'>
 					<div class="form-group">
@@ -186,13 +176,39 @@
 						<span style='font-size:10.5px;'><i><b>File size must be less than 100kb allowed format JPG,JPEG,PNG only</b></i></span>
 					</div>
 				</div>	
+				<div class='col-sm-8'>
+					<div class="form-group">
+						<label>Whether Child is Studying in NURSERY / BAL VATIKA-1 (session 2024-2025) <span>*</span></label>
+						<select class="form-control" name='prev_skool' onchange="prevskool(this.value, 'C')" required>
+							<option value=''>Select</option>
+							<option value='yes'>Yes</option>
+							<option value='no'>No</option>
+						</select>
+					</div>
+				</div>
+				<div class='col-sm-4' id="skoolname" style="display: none;">
+					<div class="form-group">
+						<label>Name of the School <span>*</span></label>
+						<input type="text" pattern="^[a-zA-Z][\sa-zA-Z]*" class="form-control" name='skoolname' onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32 || event.charCode == 46' required>
+					</div>
+				</div>
+				<div class='col-sm-4' id="classname" style="display: none;">
+					<div class="form-group">
+						<label>Class <span>*</span></label>
+						<select class="form-control" name='classname' required>
+							<option value=''>Select</option>
+							<option value='nursery'>NURSERY</option>
+							<option value='balvatika'>BAL VATIKA - I</option>
+						</select>
+					</div>
+				</div>
+		
 			</div>
 			</fieldset>
 			
 			<fieldset class="scheduler-border">
 				<legend class="scheduler-border">PARENT'S DETAILS</legend>
 					<div class='row'>	
-						
 						<div class='col-sm-6'>
 							<fieldset class="scheduler-border">
 								<legend class="scheduler-border">FATHER'S DETAILS</legend>
@@ -234,14 +250,28 @@
 								<div class='col-sm-6'>
 									<div class="form-group">
 										<label>Govt. Job</label>
-										<select class="form-control" name='f_gov_job' required>
+										<select class="form-control" name='f_gov_job' onchange="govjob(this.value,'F')"  required>
 											<option value='Y'>YES</option>
 											<option value='N' selected>NO</option>
 										</select>
 									</div>
 								</div>
-								
-								<div class='col-sm-6'>
+								<div id='job_dropdown' style='display:none'>
+									<div class='col-sm-6'>
+										<div class="form-group">
+											<label>Job Type</label>
+											<select class="form-control" id='branch_select' name='fbranch_select' onchange="toggleTransferableOptions(this.value,'F')">
+												<option value=''>Select</option>
+												<option value='army'>Army</option>
+												<option value='navy'>Navy</option>
+												<option value='air_forces'>Air Forces</option>
+												<option value='security_forces'>Security Forces</option>
+												<option value='others'>Others</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class='col-sm-6' id='f_tranferable' style='display:none'>
 									<div class="form-group">
 										<label>Govt. Job Transferable</label>
 										<select class="form-control" name='f_jbo_transferable'>
@@ -320,14 +350,30 @@
 								<div class='col-sm-6'>
 									<div class="form-group">
 										<label>Govt. Job</label>
-										<select class="form-control" name='m_gov_job'>
+										<select class="form-control" name='m_gov_job' onchange="govjob(this.value,'M')">
 											<option value='Y'>YES</option>
 											<option value='N' selected>NO</option>
 										</select>
 									</div>
 								</div>
+
+								<div id='mjob_dropdown' style='display:none'>
+									<div class='col-sm-6'>
+										<div class="form-group">
+											<label>Job Type</label>
+											<select class="form-control" id='branch_select' name='mbranch_select' onchange="toggleTransferableOptions(this.value,'M')">
+												<option value=''>Select</option>
+												<option value='army'>Army</option>
+												<option value='navy'>Navy</option>
+												<option value='air_forces'>Air Forces</option>
+												<option value='security_forces'>Security Forces</option>
+												<option value='others'>Others</option>
+											</select>
+										</div>
+									</div>
+								</div>
 								
-								<div class='col-sm-6'>
+								<div class='col-sm-6' id='m_transferable' style="display: none;">
 									<div class="form-group">
 										<label>Govt. Job Transferable</label>
 										<select class="form-control" name='m_jbo_transferable'>
@@ -365,6 +411,7 @@
 							</fieldset>	
 						</div>
 					</div>
+
 					
 					<div class='row'>
 					    <div class='col-sm-6'>
@@ -579,8 +626,8 @@
 	$('.datepicker').datepicker({
 	    format: 'dd-MM-yyyy',
 	    autoclose:true,
-		startDate: "01-APR-2019",
-		endDate: "31-MAR-2020"
+		startDate: "01-APR-2020",
+		endDate: "31-MAR-2021"
 	});
 	
 	$('#f_year_leaving').datepicker({
@@ -639,6 +686,44 @@
 			$("#m_hideShow").hide();
 			$("#m_year_leaving").prop('disabled',true);
 			$("#m_reg_no").prop('disabled',true);
+		}
+	}
+
+	
+	function govjob(val,gen){
+		if(gen == 'F' && val == 'Y'){
+			$("#job_dropdown").show();
+			
+		}else if(gen == 'M' && val == 'Y'){
+			$("#mjob_dropdown").show();
+		}else if(gen == 'M' && val == 'N'){
+			$("#mjob_dropdwon").hide();
+		}else{
+			$("#job_dropdown").hide();
+		}
+	}
+
+	function toggleTransferableOptions(val,gen){
+		if(gen == 'F' && val == 'others'){
+			$("#f_tranferable").show();	
+		}else if(gen == 'M' && val == 'others'){
+			$("#m_transferable").show();
+		}else if(gen == 'M' && val == 'army' || val =='navy' || val == 'air_forces' || val == 'security_forces' || val == 'housemaker' ){
+		    $("#m_transferable").hide();	
+		}else{
+			$("#f_tranferable").hide();
+		}
+	}
+
+	
+
+	function prevskool(val,gen){
+		if(gen == 'C' && val == 'yes'){
+			$("#skoolname").show();	
+			$("#classname").show();
+		}else{
+			alert("Student Not Eligible for Registration");
+			location.reload();
 		}
 	}
 	

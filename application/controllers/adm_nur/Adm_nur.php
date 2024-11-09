@@ -1,39 +1,44 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Adm_nur extends MY_Controller {
-	public function __construct(){
-		parent:: __construct();
-		$this->load->model('Alam','alam');
-		$this->load->library('Alam_custom','alam_custom');
+class Adm_nur extends MY_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('Alam', 'alam');
+		$this->load->library('Alam_custom', 'alam_custom');
 	}
-	
-	public function index(){
-		
-		$data['stu_classes'] = $this->alam->selectA('student','CLASS,DISP_CLASS',"Student_Status = 'ACTIVE' GROUP BY CLASS,DISP_CLASS");
-		$data['school_setting'] = $this->alam->select('school_setting','*');
-		$data['school_photo'] = $this->alam->select('school_photo','*');
-		$data['religion'] = $this->alam->selectA('religion','*',"status='Y' order by sorting_no");
-		$data['category'] = $this->alam->selectA('category','*');
+
+	public function index()
+	{
+
+		$data['stu_classes'] = $this->alam->selectA('student', 'CLASS,DISP_CLASS', "Student_Status = 'ACTIVE' GROUP BY CLASS,DISP_CLASS");
+		$data['school_setting'] = $this->alam->select('school_setting', '*');
+		$data['school_photo'] = $this->alam->select('school_photo', '*');
+		$data['religion'] = $this->alam->selectA('religion', '*', "status='Y' order by sorting_no");
+		$data['category'] = $this->alam->selectA('category', '*');
 		$data['motherTounge'] = $this->alam_custom->motherTounge();
 		$data['bloodGroup'] = $this->alam_custom->bloodGroup();
 		$data['parent_qualification'] = $this->alam_custom->parent_qualification();
 		$data['parent_accupation'] = $this->alam_custom->parent_accupation();
 		$data['grand_parent'] = $this->alam_custom->grand_parent();
-		$this->load->view('nur_adm/admForm',$data);
+		$this->load->view('nur_adm/admForm', $data);
 	}
-	
-	function atom_respons(){
-		if(isset($_GET['VERIFIED'])){
-		$status=$_GET['VERIFIED'];
-        $order_id=$_GET['MerchantTxnID'];
-		$saveDAta=array('status'=>$status,
-		'order_id'=>$order_id
-		 );
-		$this->alam->insert('atom_test',$saveDAta);
-		if($_GET['VERIFIED']=='SUCCESS'){
-			$datta=array(
-			'mmp_txn' => $_GET['AtomTxnId'],
+
+	function atom_respons()
+	{
+		if (isset($_GET['VERIFIED'])) {
+			$status = $_GET['VERIFIED'];
+			$order_id = $_GET['MerchantTxnID'];
+			$saveDAta = array(
+				'status' => $status,
+				'order_id' => $order_id
+			);
+			$this->alam->insert('atom_test', $saveDAta);
+			if ($_GET['VERIFIED'] == 'SUCCESS') {
+				$datta = array(
+					'mmp_txn' => $_GET['AtomTxnId'],
 					//'transaction_id'         => $paymentResponse['mer_txn'],
 					'amt'         			 => $_GET['AMT'],
 					'bank_txn'    			 => $_GET['BID'],
@@ -47,21 +52,22 @@ class Adm_nur extends MY_Controller {
 					'CardNumber'  			 => $_GET['CardNumber'],
 					'response_received_time' => date('Y-m-d H:i:s')
 				);
-		$mid=$_GET['MerchantTxnID'];
-		$this->alam->update('nursery_adm_data',$datta,"transaction_id='$mid'");	
+				$mid = $_GET['MerchantTxnID'];
+				$this->alam->update('nursery_adm_data', $datta, "transaction_id='$mid'");
 			}
 		}
-		
-		if(isset($_POST['VERIFIED'])){
-			$status=$_POST['VERIFIED'];
-$order_id=$_POST['MerchantTxnID'];
-		$saveDAta=array('status'=>$status,
-		'order_id'=>$order_id
-					   );
-		$this->alam->insert('atom_test',$saveDAta);
-				if($_POST['VERIFIED']=='SUCCESS'){
-			$datta=array(
-			'mmp_txn' => $_POST['AtomTxnId'],
+
+		if (isset($_POST['VERIFIED'])) {
+			$status = $_POST['VERIFIED'];
+			$order_id = $_POST['MerchantTxnID'];
+			$saveDAta = array(
+				'status' => $status,
+				'order_id' => $order_id
+			);
+			$this->alam->insert('atom_test', $saveDAta);
+			if ($_POST['VERIFIED'] == 'SUCCESS') {
+				$datta = array(
+					'mmp_txn' => $_POST['AtomTxnId'],
 					//'transaction_id'         => $paymentResponse['mer_txn'],
 					'amt'         			 => $_POST['AMT'],
 					'bank_txn'    			 => $_POST['BID'],
@@ -75,72 +81,71 @@ $order_id=$_POST['MerchantTxnID'];
 					'CardNumber'  			 => $_POST['CardNumber'],
 					'response_received_time' => date('Y-m-d H:i:s')
 				);
-			$mid=$_POST['MerchantTxnID'];
-			$this->alam->update('nursery_adm_data',$datta,"transaction_id='$mid'");	
+				$mid = $_POST['MerchantTxnID'];
+				$this->alam->update('nursery_adm_data', $datta, "transaction_id='$mid'");
 			}
-			
 		}
-	
+	}
 
-	}
-	
-	
-	function Getsec(){
+
+	function Getsec()
+	{
 		$classes = $this->input->post('classes');
-		$secData = $this->alam->selectA("student","SEC,DISP_SEC","CLASS='$classes' GROUP BY SEC,DISP_SEC");
-		?>
-			<option value=''>Select</option>
+		$secData = $this->alam->selectA("student", "SEC,DISP_SEC", "CLASS='$classes' GROUP BY SEC,DISP_SEC");
+?>
+		<option value=''>Select</option>
 		<?php
-		foreach($secData as $key => $val){
-			?>
-				<option value='<?php echo $val['SEC']; ?>'><?php echo $val['DISP_SEC']; ?></option>
-			<?php
+		foreach ($secData as $key => $val) {
+		?>
+			<option value='<?php echo $val['SEC']; ?>'><?php echo $val['DISP_SEC']; ?></option>
+<?php
 		}
-		
 	}
-	
-	public function checkData(){
+
+	public function checkData()
+	{
 		$stu_nm = trim(strtoupper($this->input->post('stu_nm')));
-		$dob    = date('Y-m-d',strtotime($this->input->post('dob')));
+		$dob    = date('Y-m-d', strtotime($this->input->post('dob')));
 		$mobile = $this->input->post('mobile');
 		//$stuDatacnt = $this->alam->selectA('nursery_adm_data','count(*)cnt',"stu_nm='$stu_nm' AND dob='$dob' AND mobile='$mobile'");
-		$stuDatacnt = $this->alam->selectA('nursery_adm_data','count(*)cnt',"dob='$dob' AND mobile='$mobile'");
-		
+		$stuDatacnt = $this->alam->selectA('nursery_adm_data', 'count(*)cnt', "dob='$dob' AND mobile='$mobile'");
+
 		//$str=$this->db->last_query();
 		//echo $str;
 		//die;
-		$stuData = $this->alam->selectA('nursery_adm_data','id,mobile',"stu_nm='$stu_nm' AND dob='$dob' AND mobile='$mobile'");
-		
+		$stuData = $this->alam->selectA('nursery_adm_data', 'id,mobile', "stu_nm='$stu_nm' AND dob='$dob' AND mobile='$mobile'");
+
 		$cnt = $stuDatacnt[0]['cnt'];
 		$un  = $stuData[0]['id'];
 		$pwd = $stuData[0]['mobile'];
-		$array = array($cnt,$un,$pwd);
+		$array = array($cnt, $un, $pwd);
 		echo json_encode($array);
 	}
-	
-	function saveNurAdmRecord(){
-		if($this->input->post('grnd_prnt') == 'NO'){
+
+	function saveNurAdmRecord()
+	{
+		if ($this->input->post('grnd_prnt') == 'NO') {
 			$grnd_prnt = 'OTHERS';
 			//$grand_parent='4';
-		}else{
+		} else {
 			$grnd_prnt = 'YES';
 		}
-		if(!empty($_FILES['img']['name'])){
-		$image              = $_FILES['img']['name']; 
-		$expimage           = explode('.',$image);
-		$count              = count($expimage);
-		$image_ext          = $expimage[$count-1];
-		$image_name         = strtotime('now'). mt_rand() .'.'.$image_ext;
-		$imagepath          = "assets/nur_adm_img/".$image_name;
-		
-		move_uploaded_file($_FILES["img"]["tmp_name"],$imagepath);
-		}else{
+		if (!empty($_FILES['img']['name'])) {
+			$image              = $_FILES['img']['name'];
+			$expimage           = explode('.', $image);
+			$count              = count($expimage);
+			$image_ext          = $expimage[$count - 1];
+			$image_name         = strtotime('now') . mt_rand() . '.' . $image_ext;
+			$imagepath          = "assets/nur_adm_img/" . $image_name;
+
+			move_uploaded_file($_FILES["img"]["tmp_name"], $imagepath);
+		} else {
 			$imagepath  = '';
 		}
-		
+
 		$saveData = array(
 			'stu_nm'             => strtoupper($this->input->post('stu_nm')),
-			'dob'                => date('Y-m-d',strtotime($this->input->post('dob'))),
+			'dob'                => date('Y-m-d', strtotime($this->input->post('dob'))),
 			'gender'             => $this->input->post('gender'),
 			'phy_challenged'     => $this->input->post('phy_challenged'),
 			'category'           => $this->input->post('category'),
@@ -149,10 +154,14 @@ $order_id=$_POST['MerchantTxnID'];
 			'religion'           => strtoupper($this->input->post('religion')),
 			'blood_group'        => $this->input->post('blood_group'),
 			'img'                => $imagepath,
+			'prev_skool'         => strtoupper($this->input->post('prev_skool')), //
+			'skoolname'          => strtoupper($this->input->post('skoolname')), //
+			'classname'          => strtoupper($this->input->post('classname')), //
 			'f_name'             => strtoupper($this->input->post('f_name')),
 			'f_qualification'    => strtoupper($this->input->post('f_qualification')),
 			'f_accupation'       => strtoupper($this->input->post('f_accupation')),
 			'f_gov_job'          => strtoupper($this->input->post('f_gov_job')),
+			'fbranch_select'     => strtoupper($this->input->post('fbranch_select')), //
 			'f_jbo_transferable' => strtoupper($this->input->post('f_jbo_transferable')),
 			'f_alumini'          => strtoupper($this->input->post('f_alumini')),
 			'f_year_leaving'     => $this->input->post('f_year_leaving'),
@@ -161,6 +170,7 @@ $order_id=$_POST['MerchantTxnID'];
 			'm_qualification'    => strtoupper($this->input->post('m_qualification')),
 			'm_accupation'       => strtoupper($this->input->post('m_accupation')),
 			'm_gov_job'          => strtoupper($this->input->post('m_gov_job')),
+			'mbranch_select'     => strtoupper($this->input->post('mbranch_select')), //
 			'm_jbo_transferable' => $this->input->post('m_jbo_transferable'),
 			'm_alumini'          => $this->input->post('m_alumini'),
 			'm_year_leaving'     => $this->input->post('m_year_leaving'),
@@ -192,15 +202,16 @@ $order_id=$_POST['MerchantTxnID'];
 			//'p_phone_residence'  => $this->input->post('p_phone_residence'),
 			//'p_mobile'           => $this->input->post('p_mobile'),
 			'set_amt'            => '2000.00'
-			
+
 		);
+		// echo '<pre>';print_r($_POST);die;
+		$this->alam->insert('nursery_adm_data', $saveData);
 		
-		$this->alam->insert('nursery_adm_data',$saveData);
 		$last_id = $this->db->insert_id();
 		$last_reg_id = sprintf("%04d", $last_id);
-		
-		$regData = $this->alam->selectA('nursery_adm_data','id,dob,stu_nm,mobile,img,set_amt,verified_status,f_code',"id='$last_reg_id'");
-		
+
+		$regData = $this->alam->selectA('nursery_adm_data', 'id,dob,stu_nm,mobile,img,set_amt,verified_status,f_code', "id='$last_reg_id'");
+
 		$session = array(
 			'id'              => $regData[0]['id'],
 			'name'            => $regData[0]['stu_nm'],
@@ -211,18 +222,20 @@ $order_id=$_POST['MerchantTxnID'];
 			'f_code'          => $regData[0]['f_code'],
 			'role'            => 'APPLICANT'
 		);
-		
-		$this->session->set_userdata('generate_session',$session);
+
+		$this->session->set_userdata('generate_session', $session);
 	}
-	
-	public function payNow(){
-		$generate_session=$this->session->userdata('generate_session');
-		$data['school_setting'] = $this->alam->select('school_setting','*');
-		$data['school_photo'] = $this->alam->select('school_photo','*');
-		
-		$message = "Dear Parent, Your application is successfully submitted. Your username is ".$generate_session['id']."/2024 & password is ".$generate_session['mobile'];
-		$this->sms_lib->sendSms($generate_session['mobile'],$message);
-		$data['allData'] = $this->alam->selectA('nursery_adm_data','*',"id='".$generate_session['id']."'");
-		$this->load->view('nur_adm/payNow',$data);
+
+	public function payNow()
+	{
+		$generate_session = $this->session->userdata('generate_session');
+		$data['school_setting'] = $this->alam->select('school_setting', '*');
+		$data['school_photo'] = $this->alam->select('school_photo', '*');
+
+		$message = "Dear Parent, Your application is successfully submitted. Your username is " . $generate_session['id'] . "/2024 & password is " . $generate_session['mobile'];
+		$this->sms_lib->sendSms($generate_session['mobile'], $message);
+		$data['allData'] = $this->alam->selectA('nursery_adm_data', '*', "id='" . $generate_session['id'] . "'");
+		// echo '<pre>';print_r($data);
+		$this->load->view('nur_adm/payNow', $data);
 	}
 }

@@ -54,6 +54,14 @@
 				'3' => 'OTHERS',
 			);
 		}
+
+		public function parent_accupation(){
+			return array(
+				'1' => 'SERVICE',
+				'2' => 'BUSNIESS',
+				'3' => 'OTHERS',
+			);
+		}
 		
 		public function grand_parent(){
 			return array(
