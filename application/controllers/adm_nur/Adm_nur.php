@@ -25,6 +25,7 @@ class Adm_nur extends MY_Controller
 		$data['father_accupation'] = $this->alam_custom->father_accupation();
 		$data['mother_accupation'] = $this->alam_custom->mother_accupation();
 		$data['grand_parent'] = $this->alam_custom->grand_parent();
+		// echo '<pre>';print_r($data);die;
 		$this->load->view('nur_adm/admForm', $data);
 	}
 

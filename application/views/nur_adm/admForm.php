@@ -87,6 +87,7 @@ if ($date_now <= '2024-12-22') {
 			border: 1px solid #888;
 			width: 80%;
 			animation: slideUp 0.5s ease-in-out;
+			color: red;
 		}
 
 		.close {
@@ -245,6 +246,14 @@ if ($date_now <= '2024-12-22') {
 								<span style='font-size:10.5px;'><i><b>File size must be less than 100kb allowed format JPG,JPEG,PNG only</b></i></span>
 							</div>
 						</div>
+						<div class='col-sm-4'>
+							<div class="form-group">
+								<label>D.O.B Proof <span>*</span></label>
+								<input type="file" id="filedob" name="filedob" class="form-control file_upload1" required onchange="img_validatepdf()"
+									accept=".pdf" />
+								<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed.</b></i></span>
+							</div>
+						</div>
 						<div class='col-sm-8'>
 							<div class="form-group">
 								<label>Whether Child is Studying in NURSERY / BAL VATIKA-1 (session 2024-2025) <span>*</span></label>
@@ -268,6 +277,7 @@ if ($date_now <= '2024-12-22') {
 									<option value=''>Select</option>
 									<option value='nursery'>NURSERY</option>
 									<option value='balvatika'>BAL VATIKA - I</option>
+									<option value='others'>Others</option>
 								</select>
 							</div>
 						</div>
@@ -305,7 +315,7 @@ if ($date_now <= '2024-12-22') {
 								<div class='col-sm-6'>
 									<div class="form-group">
 										<label>Occupation <span>*</span></label>
-										<select class="form-control" name='f_accupation' required>
+										<select class="form-control" name='f_accupation' onchange="f_occupation(this.value,'F')" required>
 											<option value=''>Select</option>
 											<?php
 											foreach ($father_accupation as $key => $val) {
@@ -316,7 +326,7 @@ if ($date_now <= '2024-12-22') {
 									</div>
 								</div>
 
-								<div class='col-sm-6'>
+								<div id="f_govjob" class='col-sm-6' style='display:none'>
 									<div class="form-group">
 										<label>Govt. Job</label>
 										<select class="form-control" name='f_gov_job' onchange="govjob(this.value,'F')" required>
@@ -328,7 +338,7 @@ if ($date_now <= '2024-12-22') {
 								<div id='job_dropdown' style='display:none'>
 									<div class='col-sm-6'>
 										<div class="form-group">
-											<label>Job Type</label>
+											<label>Govt. Job Type</label>
 											<select class="form-control" id='branch_select' name='fbranch_select' onchange="toggleTransferableOptions(this.value,'F')">
 												<option value=''>Select</option>
 												<option value='army'>Army</option>
@@ -338,6 +348,14 @@ if ($date_now <= '2024-12-22') {
 												<option value='others'>Others</option>
 											</select>
 										</div>
+									</div>
+								</div>
+								<div id="f_govdoc" style="display: none;" class='col-sm-6'>
+									<div class="form-group">
+										<label>Supporting Document <span>*</span></label>
+										<input type="file" id="filefgovdoc" name="filefgovdoc" class="form-control file_upload1" required onchange="img_validatepdf()"
+											accept=".pdf" />
+										<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed.</b></i></span>
 									</div>
 								</div>
 								<div class='col-sm-6' id='f_tranferable' style='display:none'>
@@ -375,6 +393,14 @@ if ($date_now <= '2024-12-22') {
 										</div>
 									</div>
 								</div>
+								<div class='col-sm-6'>
+									<div class="form-group">
+										<label>Father Aadhar <span>*</span></label>
+										<input type="file" id="filefadhar" name="filefadhar" class="form-control file_upload1" required onchange="img_validatepdf()"
+											accept=".pdf" />
+										<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed.</b></i></span>
+									</div>
+								</div>
 							</fieldset>
 						</div>
 
@@ -402,10 +428,11 @@ if ($date_now <= '2024-12-22') {
 									</div>
 								</div>
 
-								<div class='col-sm-6'>
+
+								<div id="m_occupation" class='col-sm-6'>
 									<div class="form-group">
 										<label>Occupation <span>*</span></label>
-										<select class="form-control" name='m_accupation' required>
+										<select class="form-control" name='m_accupation' onchange="m_occupation(this.value,'M')" required>
 											<option value=''>Select</option>
 											<?php
 											foreach ($mother_accupation as $key => $val) {
@@ -416,7 +443,7 @@ if ($date_now <= '2024-12-22') {
 									</div>
 								</div>
 
-								<div class='col-sm-6'>
+								<div id="m_govjob" class='col-sm-6' style='display:none'>
 									<div class="form-group">
 										<label>Govt. Job</label>
 										<select class="form-control" name='m_gov_job' onchange="mgovjob(this.value,'M')">
@@ -425,11 +452,19 @@ if ($date_now <= '2024-12-22') {
 										</select>
 									</div>
 								</div>
+								<div id="m_govdoc" style="display: none;" class='col-sm-6'>
+									<div class="form-group">
+										<label>Supporting Document <span>*</span></label>
+										<input type="file" id="filemgovdoc" name="filemgovdoc" class="form-control file_upload1" required onchange="img_validatepdf()"
+											accept=".pdf" />
+										<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed.</b></i></span>
+									</div>
+								</div>
 
 								<div id='mjob_dropdown' style='display:none'>
 									<div class='col-sm-6'>
 										<div class="form-group">
-											<label>Job Type</label>
+											<label>Govt. Job Type</label>
 											<select class="form-control" id='branch_select' name='mbranch_select' onchange="toggleTransferableOptions(this.value,'M')">
 												<option value=''>Select</option>
 												<option value='army'>Army</option>
@@ -477,6 +512,15 @@ if ($date_now <= '2024-12-22') {
 										</div>
 									</div>
 								</div>
+								<div class='col-sm-6'>
+									<div class="form-group">
+										<label>Mother Aadhar <span>*</span></label>
+										<input type="file" id="filemadhar" name="filemadhar" class="form-control file_upload1" required onchange="img_validatepdf()"
+											accept=".pdf" />
+										<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed.</b></i></span>
+									</div>
+								</div>
+
 							</fieldset>
 						</div>
 					</div>
@@ -492,6 +536,7 @@ if ($date_now <= '2024-12-22') {
 										<input type="number" class="form-control" name='no_of_son' id='no_of_son' onkeypress="if(this.value.length==1) { return false;}" min='0' max='9' oninput='sibling()'>
 									</div>
 								</div>
+
 								<div class='col-sm-6'>
 									<div class="form-group">
 										<label>No. of Daughters</label>
@@ -520,6 +565,14 @@ if ($date_now <= '2024-12-22') {
 											<option value='Father'>Father</option>
 											<option value='Mother'>Mother</option>
 										</select>
+									</div>
+								</div>
+								<div id="parentsdtls" style="display: none;" class='col-sm-6'>
+									<div class="form-group">
+										<label>Supporting Document <span>*</span></label>
+										<input type="file" id="singlpdoc" name="singlpdoc" class="form-control file_upload1" required onchange="img_validatepdf()"
+											accept=".pdf" />
+										<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed.</b></i></span>
 									</div>
 								</div>
 							</fieldset>
@@ -567,15 +620,32 @@ if ($date_now <= '2024-12-22') {
 										</div>
 									</div>
 								<?php } ?>
-								<span style='color:red'>* <b>Note:- </b><i>(Cousin are not allowed)</i></span>
+								<div id="siblin" class='col-sm-4'>
+									<div class="form-group">
+										<label>Supporting Document <span>*</span></label>
+										<input type="file" id="filesibling" name="filesibling" class="form-control file_upload1" required onchange="img_validatepdf()"
+											accept=".pdf" />
+									</div>
+									<span style='font-size:10.5px;'><i><b>File size must be less than 100kb, and only PDF format is allowed. (merge the idcard and upload as 1 pdf.</b></i></span>
+								</div>
+								<div style="margin-top: 100px; text-align: right; color:red;">
+									<span><b>Note:- </b><i>(Cousin are not allowed)</i></span>
+								</div>
 							</fieldset>
 						</div>
 					</div>
 
 					<div class='row'>
 						<div class='col-sm-9'>
-							<label>Whether Grand Parent worked/working in JVM/MECON/SAIL Units at Ranchi. <br />(Related original certificate to be submitted in hardcopy issued by Personnel Department of MECON/SAIL units at Ranchi).</label><br />
+							<label>Whether Grand Parent worked/working in MECON/SAIL/JVM Units at Ranchi. <br />(Related original certificate to be submitted in hardcopy issued by Personnel Department of MECON/SAIL units at Ranchi).</label><br />
 							<input type='radio' name='grnd_prnt' value='YES' onclick="grnd_prntt('Y')"> YES <input type='radio' name='grnd_prnt' value='NO' onclick="grnd_prntt('N')" checked> NO
+						</div>
+						<div id="grndprntpdf" style="display: none;" class='col-sm-3'>
+							<div class="form-group">
+								<label>Supporting Document <span>*</span></label>
+								<input type='file' id='filefadhar' name='img' class='form-control file_upload1' required onchange='img_validate()'>
+								<span style='font-size:10.5px;'><i><b>File size must be less than 100kb allowed format JPG,JPEG,PNG only</b></i></span>
+							</div>
 						</div>
 						<div class='col-sm-3' id='grp_prnts' style='display:none;'>
 							<div class="form-group">
@@ -613,6 +683,14 @@ if ($date_now <= '2024-12-22') {
 									<label>PIN Code <span>*</span></label>
 									<input type="number" class="form-control" name='pin_code' id='pin_code' onkeypress="if(this.value.length==6) { return false;}" min='0' required onchange='no_validate(6,this)'>
 								</div>
+							</div>
+
+							<div class="col-sm-6">
+							<div class="form-group">
+								<label>RES. ADDRESS PROOF <span>*</span></label>
+								<input type="file" id="resproof" name="resproof" class="form-control file_upload1" required onchange="img_validatepdf()"
+									accept=".pdf" />
+							</div>
 							</div>
 
 							<!--<div class='col-sm-6'>
@@ -658,6 +736,13 @@ if ($date_now <= '2024-12-22') {
 									<label>PIN Code <span>*</span> </label>
 									<input type="number" class="form-control" name='p_pin_code' id='p_pin_code' onkeypress="if(this.value.length==6) { return false;}" min='0' required onchange='no_validate(6,this)'>
 								</div>
+							</div>
+							<div class="col-sm-6">
+							<div class="form-group">
+								<label>PER. ADDRESS PROOF <span>*</span></label>
+								<input type="file" id="perproof" name="perproof" class="form-control file_upload1" required onchange="img_validatepdf()"
+									accept=".pdf" />
+							</div>
 							</div>
 
 							<!--<div class='col-sm-6'>
@@ -740,11 +825,13 @@ if ($date_now <= '2024-12-22') {
 	function grnd_prntt(val) {
 		if (val == 'Y') {
 			$("#grp_prnts").show();
+			$('#grndprntpdf').show();
 			$("#grand_parent").html("<option value=''>Select</option><?php foreach ($grand_parent as $key => $val) {
 																			if ($key != 4) {  ?><option value='<?php echo $key; ?>'><?php echo $val; ?></option><?php }
 																																						} ?>");
 		} else {
 			$("#grp_prnts").hide();
+			$('#grndprntpdf').hide();
 			$("#grand_parent").html("<option value=''>Select</option><?php foreach ($grand_parent as $key => $val) {
 																			if ($key == 4) {  ?><option value='<?php echo $key; ?>'><?php echo $val; ?></option><?php }
 																																						} ?>");
@@ -775,19 +862,56 @@ if ($date_now <= '2024-12-22') {
 	function govjob(val, gen) {
 		if (gen == 'F' && val == 'Y') {
 			$("#job_dropdown").show();
+			$("#f_govdoc").show();
 
 		} else {
 			$("#job_dropdown").hide();
+			$("#f_govdoc").hide();
 		}
 	}
 
 	function mgovjob(val, gen) {
 		if (gen == 'M' && val == 'Y') {
 			$("#mjob_dropdown").show();
+			$("#m_govdoc").show();
 		} else {
 			$("#mjob_dropdown").hide();
+			$("#m_govdoc").hide();
 		}
 	}
+
+	function f_occupation(val, gen) {
+		if ((val == '1' || val == '3') && gen == 'F') {
+			$("#f_govjob").show();
+
+		} else if (val == '2') {
+			$("#f_govjob").hide();
+			$("#job_dropdown").hide();
+			$("#f_tranferable").hide();
+		} else {
+
+			$("#f_govjob").hide();
+			$("#job_dropdown").hide();
+			$("#f_tranferable").hide();
+		}
+	}
+
+	function m_occupation(val, gen) {
+		if ((val == '1' || val == '4') && gen == 'M') {
+			$("#m_govjob").show();
+		} else if (val == '2' || val == '3') {
+			$("#m_govjob").hide();
+			$("#mjob_dropdown").hide();
+			$("#m_tranferable").hide();
+		} else {
+
+			$("#m_govjob").hide();
+			$("#mjob_dropdown").hide();
+			$("#m_tranferable").hide();
+		}
+	}
+
+
 
 	function toggleTransferableOptions(val, gen) {
 		if (gen == 'F' && val == 'others') {
@@ -844,8 +968,10 @@ if ($date_now <= '2024-12-22') {
 
 	function single_parents(val) {
 		if (val == 'Y') {
+			$("#parentsdtls").show();
 			$("#fatormot").prop('disabled', false);
 		} else {
+			$("#parentsdtls").hide();
 			$("#fatormot").prop('disabled', true);
 		}
 	}
@@ -1010,5 +1136,33 @@ if ($date_now <= '2024-12-22') {
 				}, 500);
 			}
 		}
+	}
+
+	function img_validatepdf() {
+		var fileInput = document.getElementById("filemadhar");
+		var file = fileInput.files[0];
+
+
+		if (file) {
+			var fileSize = file.size / 1024;
+			var fileType = file.type;
+
+			if (fileSize > 1024) {
+				alert("File size must be less than 1MB.");
+				fileInput.value = "";
+				return false;
+			}
+
+			if (fileType !== "application/pdf") {
+				alert("Only PDF files are allowed.");
+				fileInput.value = "";
+				return false;
+			}
+		} else {
+			alert("Please select a file.");
+			return false;
+		}
+
+		return true;
 	}
 </script>
