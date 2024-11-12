@@ -41,9 +41,9 @@ class Payment extends My_controller{
 		//$acc = "639827";
 		//$reqHashKey = "816e2e1f6ec25d7e7c";
 		
-		$redirect_url = base_url('adm_nur/payment/Payment/redirect_payment_new');
+		$returnurl = base_url('adm_nur/payment/Payment/redirect_payment_new');
 		
-		$this->testObject->getpay_request($transId, $product, $amt, $redirect_url, $clientCode, $name, $email, $mobile,$address);
+		$this->testObject->getpay_request($clientCode, $mobile, $amt, $name, $address, $emaill, $product, $transId, $returnurl);
 		
 	}
 	
@@ -178,7 +178,7 @@ class Payment extends My_controller{
 		$json_array = json_decode($json, true);
 		
 		if(!empty($json)){
-			if($json_array['tsnStatus'] == 'SUCCESS'){
+			if($json_array['txnStatus'] == 'SUCCESS'){
 				
 				$updData = array(
 					'mmp_txn'     			 => $json_array['getepayTxnId'],
@@ -230,12 +230,19 @@ class Payment extends My_controller{
 				$data['parent_accupation'] = $this->alam_custom->parent_accupation();
 				$data['grand_parent'] = $this->alam_custom->grand_parent();
 				
-				$data['allData'] = $this->alam->selectA('nursery_adm_data','*,(select CAT_DESC from category where CAT_CODE=nursery_adm_data.category)category,(select Rname from religion where RNo=nursery_adm_data.religion)religion,(select CLASS_NM from classes where Class_No=nursery_adm_data.class_0)class_0,(select CLASS_NM from classes where Class_No=nursery_adm_data.class_1)class_1,(select SECTION_NAME from sections where section_no=nursery_adm_data.sec_0)sec_0,(select SECTION_NAME from sections where section_no=nursery_adm_data.sec_1)sec_1',"id='".$generate_session['id']."'");
+				$data['allData'] = $this->alam->selectA('nursery_adm_data','*,
+				(select CAT_DESC from category where CAT_CODE=nursery_adm_data.category)category,
+				(select Rname from religion where RNo=nursery_adm_data.religion)religion,
+				(select CLASS_NM from classes where Class_No=nursery_adm_data.class_0)class_0,
+				(select CLASS_NM from classes where Class_No=nursery_adm_data.class_1)class_1,
+				(select SECTION_NAME from sections where section_no=nursery_adm_data.sec_0)sec_0,
+				(select SECTION_NAME from sections where section_no=nursery_adm_data.sec_1)sec_1',
+				"id='".$generate_session['id']."'");
 
-				$link = base_url('parent_dashboard/Cbse_Reg/Gautam/Print_user_profile/' . $generate_session['id']);
-				
-				// $this->load->view('nur_adm/generate_reg_pdf',$data);
-				echo "<center><h3>Payment Successfully Completed..<a href='" . $link . "'>Click For Print</a></h3></center>";
+				//$link = base_url('parent_dashboard/Cbse_Reg/Gautam/Print_user_profile/' . $generate_session['id']);
+				// echo '<pre>';print_r($data);die;
+				 $this->load->view('nur_adm/generate_reg_pdf',$data);
+				//echo "<center><h3>Payment Successfully Completed..<a href='" . $link . "'>Click For Print</a></h3></center>";
 				
 				// $html = $this->output->get_output();
 				// $this->load->library('pdf');

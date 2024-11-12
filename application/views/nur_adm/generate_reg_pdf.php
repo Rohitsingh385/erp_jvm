@@ -52,18 +52,18 @@
 			<table class='table'>
 				<tr>
 					<td style='text-align:left; width:15%'>
-						<img src='<?php echo $allData[0]['img']; ?>' style='width:100px;'>
-						<h4 style='background:#000; color:#fff; text-align:center'><?php echo $allData[0]['id'].'/2024'; ?></h4>
+						<img src='<?php echo base_url($allData[0]['img']); ?>' style='width:100px;'>
+						<h4 style='background:#000; color:#fff; text-align:center'><?php echo $allData[0]['id'].'/2025'; ?></h4>
 					</td>
 					<td style='width:70%;'>
 						<center>
-							<img src="<?php echo $school_photo[0]->School_Logo_RT; ?>" style="width:100px;"><br />
+							<img src="<?php echo base_url($school_photo[0]->School_Logo_RT); ?>" style="width:100px;"><br />
 							<span style='font-size:25px !important;'><?php echo $school_setting[0]->School_Name; ?></span><br /
 							>
 							<span style='font-size:18px !important'>
 							Shyamali, Doranda Ranchi - 834002
 							</span><br /><br />
-							<b><center><span style='font-size:16px !important;'>NURSERY APPLICATION FORM (for session 2024-2025)</span></center></b>
+							<b><center><span style='font-size:16px !important;'>LKG APPLICATION FORM (for session 2025-2026)</span></center></b>
 						</center>
 					</td>
 					<td style='width:15%; text-align:center'>
@@ -75,7 +75,7 @@
 			
 			<table class='table' style='padding-top:-20px !important;'>
 				<tr>
-					<td colspan='6' style='background:#eee; font-size:14px;'>APPLICANT DETAILS</td>
+					<td colspan='8' style='background:#eee; font-size:14px;'>APPLICANT DETAILS</td>
 				</tr>
 				<tr>	
 					<th>Applicant's Name:-</th>
@@ -84,24 +84,12 @@
 					<td><?php echo date('d-M-y',strtotime($allData[0]['dob'])); ?></td>
 					<th>Gender:-</th>
 					<td><?php echo ($allData[0]['gender'] == 1)?'MALE':'FEMALE'; ?></td>
-				</tr>
+					<th>Name of the School:-</th>
+					<td><?php echo $allData[0]['skoolname']; ?></td>
+				</tr>	
 				<tr>	
-					<th>Differently Abled:-</th>
-					<td>
-					<?php
-								if($allData[0]['phy_challenged']=='Y' || $allData[0]['phy_challenged']=='YES'){
-									echo "YES";
-								}else if($allData[0]['phy_challenged']=='N' || $allData[0]['phy_challenged']=='NO'){
-									echo "NO";
-								}
-					?>	
-					</td>
-					<th>Category:-</th>
-					<td><?php echo $allData[0]['category']; ?></td>
-					<th>Aadhaar No.:-</th>
-					<td><?php echo $allData[0]['aadhaar_no']; ?></td>
-				</tr>
-				<tr>	
+				<th>Class :-</th>
+				<td><?php echo $allData[0]['classname']; ?></td>
 					<th>Mother Tongue:-</th>
 					<td><?php echo $motherTounge[$allData[0]['mother_tounge']]; ?></td>
 					<th>Religion:-</th>
@@ -110,7 +98,7 @@
 					<td><?php echo $bloodGroup[$allData[0]['blood_group']]; ?></td>
 				</tr>
 				<tr>
-					<td colspan='6' style='background:#eee; font-size:14px;'>FATHER'S DETAILS</td>
+					<td colspan='8' style='background:#eee; font-size:14px;'>FATHER'S DETAILS</td>
 				</tr>
 				<tr>	
 					<th>Name:-</th>
@@ -128,6 +116,23 @@
 									echo "YES";
 								}else if($allData[0]['f_gov_job']=='N' || $allData[0]['f_gov_job']=='NO'){
 									echo "NO";
+								}
+					?>	
+					</td>
+					<th>Job Type:-</th>
+					<td>
+					<?php
+								if($allData[0]['fbranch_select']=='army' || $allData[0]['fbranch_select']=='army'){
+									echo "army";
+								}else if($allData[0]['fbranch_select']=='navy' || $allData[0]['fbranch_select']=='navy'){
+									echo "navy";
+								}else if($allData[0]['fbranch_select']=='air_forces' || $allData[0]['fbranch_select']=='air_forces'){
+									echo "air_forces";
+								}else if($allData[0]['fbranch_select']=='security_forces' || $allData[0]['fbranch_select']=='security_forces'){
+									echo "security_forces";
+								}
+								else if($allData[0]['fbranch_select']=='others' || $allData[0]['fbranch_select']=='others'){
+									echo "others";
 								}
 					?>	
 					</td>
@@ -161,7 +166,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td colspan='6' style='background:#eee; font-size:14px;'>MOTHER'S DETAILS</td>
+					<td colspan='8' style='background:#eee; font-size:14px;'>MOTHER'S DETAILS</td>
 				</tr>
 				<tr>	
 					<th>Name:-</th>
@@ -179,6 +184,23 @@
 									echo "YES";
 								}else if($allData[0]['m_gov_job']=='N' || $allData[0]['m_gov_job']=='NO'){
 									echo "NO";
+								}
+					?>	
+					</td>
+					<th>Job Type:-</th>
+					<td>
+					<?php
+								if($allData[0]['mbranch_select']=='army' || $allData[0]['fbranch_select']=='army'){
+									echo "army";
+								}else if($allData[0]['mbranch_select']=='navy' || $allData[0]['fbranch_select']=='navy'){
+									echo "navy";
+								}else if($allData[0]['mbranch_select']=='air_forces' || $allData[0]['fbranch_select']=='air_forces'){
+									echo "air_forces";
+								}else if($allData[0]['mbranch_select']=='security_forces' || $allData[0]['fbranch_select']=='security_forces'){
+									echo "security_forces";
+								}
+								else if($allData[0]['mbranch_select']=='others' || $allData[0]['fbranch_select']=='others'){
+									echo "others";
 								}
 					?>	
 					</td>

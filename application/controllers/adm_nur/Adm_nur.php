@@ -149,7 +149,7 @@ class Adm_nur extends MY_Controller
 			'stu_nm'             => strtoupper($this->input->post('stu_nm')),
 			'dob'                => date('Y-m-d', strtotime($this->input->post('dob'))),
 			'gender'             => $this->input->post('gender'),
-			'phy_challenged'     => $this->input->post('phy_challenged'),
+			//'phy_challenged'     => $this->input->post('phy_challenged'),
 			'category'           => $this->input->post('category'),
 			'aadhaar_no'         => $this->input->post('aadhaar_no'),
 			'mother_tounge'      => strtoupper($this->input->post('mother_tounge')),
