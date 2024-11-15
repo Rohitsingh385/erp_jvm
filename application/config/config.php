@@ -520,3 +520,9 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['upload_path'] = FCPATH . 'assets/nur_adm_docs/';
+$config['allowed_types'] = 'pdf';
+$config['max_size'] = 10240; 
+$config['file_name'] = time() . mt_rand() . '.pdf';
+

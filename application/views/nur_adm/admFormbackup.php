@@ -661,9 +661,9 @@ if ($date_now <= '2024-12-22') {
 										</div>
 									</div>
 								<?php } ?>
-								<div id="siblin" class='col-sm-4' style="display: none;">
+								<div id="siblin" class='col-sm-4'>
 									<div class="form-group">
-										<label>Sibling 1 ID card </label>
+										<label>Sibling 1 </label>
 										<input type="file" id="filesibling" name="filesibling" class="form-control file_upload1" onchange="validatePDF('filesibling', 500)"
 											accept=".pdf" />
 									</div>
@@ -671,7 +671,7 @@ if ($date_now <= '2024-12-22') {
 								</div>
 								<div id="siblin1" class='col-sm-4' style="display: none;">
 									<div class="form-group">
-										<label>Sibling 2 ID card </label>
+										<label>Sibling 2 </label>
 										<input type="file" id="filesibling1" name="filesibling1" class="form-control file_upload1" onchange="validatePDF('filesibling1', 500)"
 											accept=".pdf" />
 									</div>
@@ -817,7 +817,7 @@ if ($date_now <= '2024-12-22') {
 				</div>
 				<div class='row'>
 					<div class='col-sm-12'>
-						<center><button  class='btn btn-success' disabled id='sv_btn'><i class="fa fa-circle-o-notch fa-spin" style='display:none' id='process'></i> SUBMIT</button></center>
+						<center><button class='btn btn-success' id='sv_btn'><i class="fa fa-circle-o-notch fa-spin" style='display:none' id='process'></i> SUBMIT</button></center>
 					</div>
 				</div>
 			</form>
@@ -900,13 +900,12 @@ if ($date_now <= '2024-12-22') {
 			$("#m_year_leaving").prop('disabled', false);
 			$("#m_reg_no").prop('disabled', false);
 		} else if (gen == 'F' && val == 'N') {
-			$("#filefalumni").hide();
 			$("#f_hideShow").hide();
 			$("#f_year_leaving").prop('disabled', true);
 			$("#f_reg_no").prop('disabled', true);
 		} else {
 			$("#filemalumni").hide();
-			
+			$("#filefalumni").hide();
 			$("#m_hideShow").hide();
 			$("#m_year_leaving").prop('disabled', true);
 			$("#m_reg_no").prop('disabled', true);
@@ -920,8 +919,6 @@ if ($date_now <= '2024-12-22') {
 			$("#f_govdoc").show();
 
 		} else {
-			$("#f_tranferable").hide();
-			$("#fileftranfer").hide();
 			$("#job_dropdown").hide();
 			$("#f_govdoc").hide();
 		}
@@ -932,8 +929,6 @@ if ($date_now <= '2024-12-22') {
 			$("#mjob_dropdown").show();
 			$("#m_govdoc").show();
 		} else {
-			$("#m_transferable").hide();
-			$("#filemtranfer").hide();
 			$("#mjob_dropdown").hide();
 			$("#m_govdoc").hide();
 		}
@@ -1022,10 +1017,7 @@ if ($date_now <= '2024-12-22') {
 		var stuofjvm = $("#stuofjvm_" + fin_id).val();
 		if (fin_id == '1') {
 			$("#siblin1").show();
-		}else if(fin_id == '0'){
-			$("#siblin").show();
 		}else{
-			$("#siblin").hide();
 			$("#siblin1").hide();
 		}
 		if (stuofjvm != '') {
@@ -1170,6 +1162,7 @@ if ($date_now <= '2024-12-22') {
 	}
 
 	$("#nur_form").on("submit", function(event) {
+		alert('hi');
 		event.preventDefault();
 		$("#sv_btn").prop('disabled', true);
 		$("#process").show();
